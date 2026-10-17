@@ -27,6 +27,7 @@ export default async function Home() {
   const sessions = await sql`
     SELECT *
     FROM races
+    ORDER BY created_at desc
   `
   return (
     <main className="min-h-screen bg-zinc-50/80 p-4 md:p-8">
@@ -45,33 +46,41 @@ export default async function Home() {
           </CardHeader>
           
           <CardContent className="bg-white p-0">
-            <Table>
-              <TableHeader className="bg-zinc-50/50">
-                <TableRow>
-                  <TableHead className="w-[250px]">Track</TableHead>
-                  <TableHead>Best Lap</TableHead>
-                  <TableHead className="text-right">Session Type</TableHead>
-                </TableRow>
-              </TableHeader>
-              
-              <TableBody>
-                {sessions.map((session) => (
-                  <TableRow key={session.race_id} className="hover:bg-zinc-50/80 transition-colors">
-                    <TableCell className="font-medium text-zinc-900">{session.track}</TableCell>
-                    
-                    {/* font-mono makes numbers align beautifully */}
-                    <TableCell className="font-mono text-zinc-600">{session.best_lap_time}s</TableCell>
-                    
-                    <TableCell className="text-right">
-                      {/* This span creates a sleek little "pill" badge for the race type */}
-                      <span className="inline-flex items-center rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-medium text-zinc-800">
-                        {session.race_type}
-                      </span>
-                    </TableCell>
+          {sessions.length === 0 ? (
+              <div className="p-8 text-center text-zinc-500">
+                No sessions yet. Time to hit the track!
+              </div>
+            ) : (
+              <Table>
+                <TableHeader className="bg-zinc-50/50">
+                  <TableRow>
+                    <TableHead className="text-left">Date</TableHead>
+                    <TableHead className="w-[250px]">Track</TableHead>
+                    <TableHead>Best Lap</TableHead>
+                    <TableHead className="text-right">Session Type</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+              
+                <TableBody>
+                  {sessions.map((session) => (
+                    <TableRow key={session.race_id} className="hover:bg-zinc-50/80 transition-colors">
+                      <TableCell className="font-medium text-zinc-900">{new Date(session.created_at).toLocaleDateString()}</TableCell>
+                      <TableCell className="font-medium text-zinc-900">{session.track}</TableCell>
+                      
+                      {/* font-mono makes numbers align beautifully */}
+                      <TableCell className="font-mono text-zinc-600">{session.best_lap_time}s</TableCell>
+                      
+                      <TableCell className="text-right">
+                        {/* This span creates a sleek little "pill" badge for the race type */}
+                        <span className="inline-flex items-center rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-medium text-zinc-800">
+                          {session.race_type}
+                        </span>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
           </CardContent>
         </Card>
 
