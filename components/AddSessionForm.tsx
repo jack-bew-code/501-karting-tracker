@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { createSession } from "@/app/actions"
 import { formSchema } from "@/lib/schemas"
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
 
 
 export default function AddSessionForm(){
@@ -31,6 +33,7 @@ export default function AddSessionForm(){
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-2xl mt-4 mx-auto py-12">
             
+            <Link className={buttonVariants()} href="/">Back</Link>
             {/* Grid Container: 1 column on mobile, 2 columns on medium screens and up */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
@@ -119,7 +122,6 @@ export default function AddSessionForm(){
             <button type="submit" className="w-full bg-zinc-900 text-white px-4 py-2 rounded-md hover:bg-zinc-800 transition-colors font-medium">
                 Save Session
             </button>
-            
         </form>
     )
 }

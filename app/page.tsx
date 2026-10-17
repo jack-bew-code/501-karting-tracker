@@ -2,6 +2,8 @@ import Image from "next/image";
 import { neon } from "@neondatabase/serverless"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
 
 export default async function Home() {
 
@@ -34,9 +36,13 @@ export default async function Home() {
       <div className="mx-auto max-w-5xl space-y-8">
         
         {/* Page Header */}
-        <div className="flex flex-col gap-1">
-          <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Dashboard</h1>
-          <p className="text-sm text-zinc-500">Overview of your recent karting sessions and lap times.</p>
+        <div className="flex justify-between items-center">
+          <div className="flex flex-col gap-1">
+            <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Dashboard</h1>
+            <p className="text-sm text-zinc-500">Overview of your recent karting sessions and lap times.</p>
+          </div>
+          
+          <Link className={buttonVariants()} href="/add-session">Add Session</Link>
         </div>
 
         {/* Sessions Data Card */}
