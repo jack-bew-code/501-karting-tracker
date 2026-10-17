@@ -4,6 +4,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
+import { createSession } from "@/app/actions"
 
 const formSchema = z.object({
     race_type: z.string().max(50),
@@ -11,7 +12,7 @@ const formSchema = z.object({
     track: z.string().max(255),
     indoor: z.boolean(),
     temp: z.number().max(50),
-    track_conditions: z.string().max(50),
+    track_condition: z.string().max(50),
     event_type: z.string().max(255),
     kart_info: z.string().max(255)
 })
@@ -25,14 +26,15 @@ export default function AddSessionForm(){
             track: "",
             indoor: false,
             temp: 0,
-            track_conditions: "",
+            track_condition: "",
             event_type: "",
             kart_info: ""
         }
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log("Form data:", values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        await createSession(values)
+        console.log("Session Saved")
     }
 
     return (
@@ -92,9 +94,9 @@ export default function AddSessionForm(){
                 {/* Track Conditions */}
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Track Conditions</label>
-                    <Input placeholder="e.g. Dry, Damp, Wet" {...form.register("track_conditions")} />
-                    {form.formState.errors.track_conditions && (
-                        <p className="text-sm text-red-500">{form.formState.errors.track_conditions.message}</p>
+                    <Input placeholder="e.g. Dry, Damp, Wet" {...form.register("track_condition")} />
+                    {form.formState.errors.track_condition && (
+                        <p className="text-sm text-red-500">{form.formState.errors.track_condition.message}</p>
                     )}
                 </div>
 
