@@ -5,17 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { createSession } from "@/app/actions"
+import { formSchema } from "@/lib/schemas"
 
-const formSchema = z.object({
-    race_type: z.string().max(50),
-    best_lap_time: z.string().regex(/^\d+\.\d{3}$/, "Must be formatted as seconds.milliseconds (e.g., 43.125)"),
-    track: z.string().max(255),
-    indoor: z.boolean(),
-    temp: z.number().max(50),
-    track_condition: z.string().max(50),
-    event_type: z.string().max(255),
-    kart_info: z.string().max(255)
-})
 
 export default function AddSessionForm(){
     const form = useForm<z.infer<typeof formSchema>>({
