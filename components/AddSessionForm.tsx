@@ -41,15 +41,27 @@ export default function AddSessionForm(){
             {/* Grid Container: 1 column on mobile, 2 columns on medium screens and up */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
-                {/* Track Name */}
+            {/* Track Name & Indoor Checkbox Group */}
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Track Name</label>
                     <Input placeholder="e.g. Buckmore Park" {...form.register("track")} />
                     {form.formState.errors.track && (
                         <p className="text-sm text-red-500">{form.formState.errors.track.message}</p>
                     )}
+                    
+                    {/* Checkbox nested inside the same column */}
+                    <div className="flex items-center space-x-2 pt-2">
+                        <input 
+                            type="checkbox" 
+                            id="indoor" 
+                            className="w-4 h-4 rounded border-gray-300 text-zinc-900 focus:ring-zinc-900"
+                            {...form.register("indoor")} 
+                        />
+                        <label htmlFor="indoor" className="text-sm font-medium">
+                            Indoor Track
+                        </label>
+                    </div>
                 </div>
-
                 {/* Event Type */}
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Event Type</label>
