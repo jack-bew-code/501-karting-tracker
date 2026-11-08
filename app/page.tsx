@@ -47,10 +47,11 @@ export default async function Home() {
 
         {/* Sessions Data Card */}
         <Card className="border-zinc-200/60 shadow-sm overflow-hidden">
-          <CardHeader className="bg-white pb-4 border-b border-zinc-100">
+          <CardHeader className="flex items-center justify-between border-b border-zinc-100 bg-white pb-4">
             <CardTitle className="text-lg">Recent Sessions</CardTitle>
+            <Link className={buttonVariants()} href="/analysis">See full analysis</Link>
           </CardHeader>
-          
+
           <CardContent className="bg-white p-0">
           {sessions.length === 0 ? (
               <div className="p-8 text-center text-zinc-500">
