@@ -14,5 +14,6 @@ export async function createSession(data: SessionData){
         VALUES (${validData.race_type}, ${validData.best_lap_time}, ${validData.track}, ${validData.indoor}, ${validData.temp}, ${validData.track_condition}, ${validData.event_type}, ${validData.kart_info});
     `
     revalidatePath('/');
+    revalidatePath('/analysis')
     redirect('/');
 }
