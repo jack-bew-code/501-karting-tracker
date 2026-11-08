@@ -8,6 +8,7 @@ import { createSession } from "@/app/actions"
 import { formSchema } from "@/lib/schemas"
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 
 export default function AddSessionForm(){
@@ -58,6 +59,7 @@ export default function AddSessionForm(){
                         </label>
                     </div>
                 </div>
+                
                 {/* Event Type */}
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Event Type</label>
@@ -119,9 +121,9 @@ export default function AddSessionForm(){
             </div>
 
             {/* Full-width submit button */}
-            <button type="submit" className="w-full bg-zinc-900 text-white px-4 py-2 rounded-md hover:bg-zinc-800 transition-colors font-medium">
-                Save Session
-            </button>
+            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting ? "Saving..." : "Save Session"}
+            </Button>
         </form>
     )
 }
