@@ -1,9 +1,13 @@
+import { auth } from "@clerk/nextjs/server";
 import { neon } from "@neondatabase/serverless";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 
 export default async function AnalysisPage() {
+  const { userId } = await auth();
+  if (!userId) return null;
+
   const sql = neon(process.env.DATABASE_URL!);
   
   // Getting card data
@@ -14,6 +18,7 @@ export default async function AnalysisPage() {
       MAX(created_at) AS last_visited, 
       COUNT(*) AS total_sessions
     FROM races
+    WHERE clerk_user_id = ${userId}
     GROUP BY track
   `;
 

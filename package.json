@@ -1,15 +1,17 @@
 {
   "name": "501-karting-tracker",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:add-race-owner": "node scripts/add-race-owner.js"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
+    "@clerk/nextjs": "^7.10.7",
     "@hookform/resolvers": "^5.9.1",
     "@neondatabase/serverless": "^1.2.0",
     "@radix-ui/react-label": "^2.1.16",
@@ -17,7 +19,7 @@
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",
     "lucide-react": "^1.48.0",
-    "next": "16.3.6",
+    "next": "^16.4.6",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-hook-form": "^7.89.0",
@@ -30,7 +32,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.6",
+    "eslint-config-next": "^16.4.6",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

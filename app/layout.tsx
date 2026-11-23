@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import pkg from "../package.json";
-import { Roboto } from "next/font/google"
+import { Roboto } from "next/font/google";
+import { ClerkProvider, SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,10 +33,27 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={`${roboto.className} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {children}
-        <div className="text-xs font-mono text-gray-500 fixed top-2 right-3">
-          v{pkg.version}
-        </div>
+        <ClerkProvider>
+          <header className="flex items-center justify-end gap-3 border-b border-zinc-200 bg-white px-4 py-3">
+            <Suspense fallback={<div className="h-9" />}>
+              <Show when="signed-out">
+                <SignInButton mode="modal">
+                  <button className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium">Sign in</button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <button className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white">Sign up</button>
+                </SignUpButton>
+              </Show>
+              <Show when="signed-in">
+                <UserButton />
+              </Show>
+            </Suspense>
+          </header>
+          {children}
+          <div className="text-xs font-mono text-gray-500 fixed top-2 right-3">
+            v{pkg.version}
+          </div>
+        </ClerkProvider>
       </body>
     </html>
   );

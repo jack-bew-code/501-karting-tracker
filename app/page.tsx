@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { auth } from "@clerk/nextjs/server";
 import { neon } from "@neondatabase/serverless"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -6,30 +6,16 @@ import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 
 export default async function Home() {
+  const { userId } = await auth();
+  if (!userId) return null;
 
   const sql = neon(process.env.DATABASE_URL!);
-
-  // const data = await sql`
-  // CREATE TABLE races (
-  //   race_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  //   race_type VARCHAR(50) NOT NULL,
-  //   best_lap_time DECIMAL(5,3) NOT NULL,
-  //   track VARCHAR(255) NOT NULL,
-  //   indoor BOOLEAN NOT NULL,
-  //   temp INTEGER,
-  //   track_condition VARCHAR(50) ,
-  //   event_type VARCHAR(255),
-  //   kart_info VARCHAR(255)
-  //   )`
-
-//   const data = await sql`
-//   INSERT INTO races (race_type, best_lap_time, track, indoor, temp, track_condition, event_type, kart_info)
-// VALUES ('Practice', 43.125, 'Buckmore Park', false, 18, 'Dry', 'Sunday Open Practice', 'Twin Engine Rental');`
 
   const sessions = await sql`
     SELECT *
     FROM races
-    ORDER BY created_at desc
+    WHERE clerk_user_id = ${userId}
+    ORDER BY created_at DESC
   `
   return (
     <main className="min-h-screen bg-zinc-50/80 p-4 md:p-8">
