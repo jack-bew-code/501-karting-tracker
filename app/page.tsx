@@ -6,8 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 
 export default async function Home() {
-  const { userId } = await auth();
-  if (!userId) return null;
+  const { userId } = await auth.protect();
 
   const sql = neon(process.env.DATABASE_URL!);
 

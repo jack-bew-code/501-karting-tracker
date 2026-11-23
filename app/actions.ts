@@ -9,10 +9,7 @@ import { type SessionData, formSchema} from "@/lib/schemas";
 const sql = neon(process.env.DATABASE_URL!);
 
 export async function createSession(data: SessionData){
-    const { userId } = await auth();
-    if (!userId) {
-        throw new Error("You must be signed in to create a session.");
-    }
+    const { userId } = await auth.protect();
 
     const validData = formSchema.parse(data)
     await sql `

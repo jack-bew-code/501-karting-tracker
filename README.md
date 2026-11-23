@@ -2,6 +2,16 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+Create a `.env.local` file with the required variables:
+
+```bash
+DATABASE_URL="postgresql://..."
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_..."
+CLERK_SECRET_KEY="sk_..."
+```
+
+For deployment (for example on Vercel), set the same variables in the project environment settings.
+
 First, run the development server:
 
 ```bash
@@ -15,6 +25,17 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Troubleshooting
+
+- If localhost shows errors like `Failed to open database` with `persistence directory` / `turbopack`, clear the local build cache:
+
+```bash
+rm -rf .next
+npm run dev
+```
+
+- If the deployed app returns `Internal Server Error`, verify `DATABASE_URL`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, and `CLERK_SECRET_KEY` are all present and correct in deployment environment variables.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
